@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../hooks/useAuth";
 import DashboardLayout from "../layouts/DashboardLayout";
 import Input from "../components/Input";
 import Textarea from "../components/Textarea";

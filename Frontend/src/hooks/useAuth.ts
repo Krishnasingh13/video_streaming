@@ -1,90 +1,87 @@
-import { useState } from "react";
-import { useAuth as useAuthContext } from "../context/AuthContext";
-import type { ApiError } from "../types/api";
+import { useContext, useState } from "react";
+import { AuthContext } from "../context/AuthContext";
 
-interface LoginParams {
-  email: string;
-  password: string;
-}
-
-interface RegisterParams {
-  email: string;
-  password: string;
-  name: string;
-  role?: string;
-}
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
+};
 
 export const useLogin = () => {
-  const { login, API_BASE } = useAuthContext();
+  const { login: setAuth, API_BASE } = useAuth();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string>("");
+  const [error, setError] = useState<string | null>(null);
 
-  const handleLogin = async ({ email, password }: LoginParams) => {
-    setError("");
+  const login = async (credentials: { email: string; password: string }) => {
     setLoading(true);
-
+    setError(null);
     try {
       const res = await fetch(`${API_BASE}/api/auth/login`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(credentials),
       });
 
       const data = await res.json();
 
       if (!res.ok) {
-        setError((data as ApiError).message || "Login failed");
-        throw new Error((data as ApiError).message || "Login failed");
+        throw new Error(data.message || "Login failed");
       }
 
-      login(data.token, data.user);
-      return data;
+      setAuth(data.token, data.user);
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : "Something went wrong";
+      const errorMessage = err instanceof Error ? err.message : "Login failed";
       setError(errorMessage);
-      throw new Error(errorMessage);
+      throw err;
     } finally {
       setLoading(false);
     }
   };
 
-  return { login: handleLogin, loading, error };
+  return { login, loading, error };
 };
 
 export const useRegister = () => {
-  const { login, API_BASE } = useAuthContext();
+  const { login: setAuth, API_BASE } = useAuth();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string>("");
+  const [error, setError] = useState<string | null>(null);
 
-  const handleRegister = async ({ email, password, name, role = "VIEWER" }: RegisterParams) => {
-    setError("");
+  const register = async (userData: {
+    email: string;
+    password: string;
+    name: string;
+    role: string;
+  }) => {
     setLoading(true);
-
+    setError(null);
     try {
       const res = await fetch(`${API_BASE}/api/auth/register`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password, name, role }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
       });
 
       const data = await res.json();
 
       if (!res.ok) {
-        setError((data as ApiError).message || "Registration failed");
-        throw new Error((data as ApiError).message || "Registration failed");
+        throw new Error(data.message || "Registration failed");
       }
 
-      login(data.token, data.user);
-      return data;
+      setAuth(data.token, data.user);
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : "Something went wrong";
+      const errorMessage = err instanceof Error ? err.message : "Registration failed";
       setError(errorMessage);
-      throw new Error(errorMessage);
+      throw err;
     } finally {
       setLoading(false);
     }
   };
 
-  return { register: handleRegister, loading, error };
+  return { register, loading, error };
 };
-

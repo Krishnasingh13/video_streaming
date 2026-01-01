@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "./useAuth";
 
 export const useVideoStream = () => {
   const { token, API_BASE } = useAuth();
