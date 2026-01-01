@@ -1,0 +1,127 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg-primary: #0a0a0f;
+  --color-bg-secondary: #12121a;
+  --color-bg-tertiary: #1a1a24;
+  --color-bg-card: #16161f;
+  --color-bg-hover: #1e1e2a;
+  
+  --color-border: #2a2a3a;
+  --color-border-light: #3a3a4a;
+  
+  --color-text-primary: #f0f0f5;
+  --color-text-secondary: #a0a0b0;
+  --color-text-muted: #6a6a7a;
+  
+  --color-accent-blue: #3b82f6;
+  --color-accent-blue-hover: #2563eb;
+  --color-accent-purple: #8b5cf6;
+  --color-accent-green: #10b981;
+  --color-accent-yellow: #f59e0b;
+  --color-accent-red: #ef4444;
+  
+  --sidebar-width: 260px;
+}
+
+@layer base {
+  * {
+    @apply box-border;
+  }
+  
+  body {
+    @apply m-0 font-sans bg-bg-primary text-text-primary;
+    font-family: 'Outfit', 'DM Sans', system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+  }
+  
+  a {
+    @apply text-inherit no-underline;
+  }
+}
+
+@layer utilities {
+  .gradient-blue {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  }
+  
+  .gradient-purple {
+    background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+  }
+  
+  .gradient-green {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  }
+  
+  .gradient-red {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  }
+  
+  .text-gradient {
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .badge-blue {
+    @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium uppercase tracking-wide bg-[rgba(59,130,246,0.15)] text-accent-blue;
+  }
+  
+  .badge-green {
+    @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium uppercase tracking-wide bg-[rgba(16,185,129,0.15)] text-accent-green;
+  }
+  
+  .badge-yellow {
+    @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium uppercase tracking-wide bg-[rgba(245,158,11,0.15)] text-accent-yellow;
+  }
+  
+  .badge-red {
+    @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium uppercase tracking-wide bg-[rgba(239,68,68,0.15)] text-accent-red;
+  }
+  
+  .badge-purple {
+    @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium uppercase tracking-wide bg-[rgba(139,92,246,0.15)] text-accent-purple;
+  }
+  
+  .badge-gray {
+    @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium uppercase tracking-wide bg-[rgba(156,163,175,0.15)] text-text-secondary;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.2s ease;
+}
+
+.animate-slideUp {
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes progress {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(400%);
+  }
+}
+
+.animate-progress {
+  animation: progress 2s linear infinite;
+}
