@@ -37,17 +37,6 @@ const DashboardLayout = ({ children }) => {
             </Link>
           ))}
         </nav>
-
-        <div className="p-4 border-t border-border">
-          <div className="flex items-center gap-2 px-3 py-2 bg-bg-tertiary rounded-lg text-sm text-text-secondary">
-            <span className="flex items-center">
-              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-            </span>
-            <span>Quick Upload</span>
-          </div>
-        </div>
       </aside>
 
       <div className="flex-1 p-8 overflow-y-auto bg-bg-primary">
